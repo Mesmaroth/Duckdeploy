@@ -4,9 +4,9 @@
 # duckenploy.ps1 [script_name] [drive_letter] [eject?]
 
 param (
-    [string]$script = "",
-    [string]$drive = "",
-    [string]$eject = "n",
+    [string]$script,
+    [string]$drive,
+    [string]$eject,
     [switch]$help
 )
 
@@ -25,14 +25,13 @@ if($help) {
 }
 
 if($script) {
-    $payload_name = $script
+    $payload_name = $script.trim(".txt")
 } else {
-    $payload_name = Read-Host 'Payload name ending in .txt? (Must be within the same directory as this script)'
+    $payload_name = Read-Host 'Ducky Script File: '
 }
 
-$payload_file = $payload_name + ".txt"
-if(-Not (Test-Path .\$payload_file)) {
-    Write-Output "ERROR: The file `"${payload_file}`" was not found. Please try again."
+if(-Not (Test-Path .\$Script)) {
+    Write-Output "ERROR: The file `"${script}`" was not found. Please try again."
     exit
 }
 
@@ -42,10 +41,14 @@ if(-Not (Test-Path .\payloads\)) {
 }
 mkdir -Force .\payloads\$payload_name | Out-Null
 Write-Output "Encoding your script."
-java -jar .\duckencoder.jar -i .\$payload_file -o .\payloads\$payload_name\inject.bin
-Move-Item $payload_file .\payloads\$payload_name\
+try{
+    java -jar .\duckencoder.jar -i .\$script -o .\payloads\$payload_name\inject.bin
+} catch {
+    exit
+}
+Move-Item $script .\payloads\$payload_name\
 Write-Output "Script moved to payloads folder (.\payloads\$payload_name)"
-$payload_file = ".\payloads\" + $payload_name + "/inject.bin"
+$script = ".\payloads\" + $payload_name + "/inject.bin"
 
 for($i = 0; $i -le 3; $i++) {
     if($drive){
@@ -64,7 +67,7 @@ for($i = 0; $i -le 3; $i++) {
         exit
     }
 }
-Copy-Item $payload_file $drive_letter
+Copy-Item $Script $drive_letter
 Write-Output "Copied payload to ${drive_letter}\inject.bin"
 Start-Sleep -m 1000
 if($eject){
