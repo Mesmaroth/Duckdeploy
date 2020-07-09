@@ -1,7 +1,7 @@
 # Author: Robert Sandoval (Mesmaroth)
 # Description: Run this script to automate the process of encoding your payload, 
 # organizing it on your machine and deploying it to your rubber ducky's micro-sd card.
-# duckenploy.ps1 [script_name] [drive_letter] [eject?]
+# duckdeploy.ps1 [file] [drive_letter] [eject?]
 
 param (
     [string]$script,
