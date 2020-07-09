@@ -17,7 +17,7 @@ This script automates the process of encoding your ducky script, copying the pay
 **Usage:** 
 duckdeploy 
 
-**Or:** duckdeploy -script [duckyScript] -drive [drive letter] -eject [y/n]
+**Or:** duckdeploy -script [file] -drive [letter] -eject [y/n]
 - `h`: display help
 - `script`: The ducky script, this must be in the same path as this script.
 - `drive`: The letter of the drive the payload would be deployed to
@@ -29,6 +29,6 @@ Example:
 
 or
 
-`PS>.\duckdeploy.ps1 -script hello_world -drive d -eject y`
+`PS>.\duckdeploy.ps1 -script hello_world.txt -drive d -eject y`
 
 
