@@ -1,5 +1,7 @@
 # Duckdeploy
-This script automates the process of encoding your ducky script, copying the payload to the sd, and ejecting the drive.
+This script automates the process of encoding your ducky script, copying the payload to the micro-sd, and ejecting the drive.
+
+**Notice** This script needs to be placed in the root directory of [Hak5's USB-Rubber-Ducky](https://github.com/hak5darren/USB-Rubber-Ducky) repo where `duckencoder.jar` resides.
 
 **Process:**
 - Encode ducky script
@@ -7,7 +9,6 @@ This script automates the process of encoding your ducky script, copying the pay
 - Copy the payload to the drive selected
 - (Optional) Eject the drive
 
-**Notice** This script needs to be placed in the root directory of [Hak5's USB-Rubber-Ducky](https://github.com/hak5darren/USB-Rubber-Ducky) repo where `duckencoder.jar` resides.
 
 **TO-DO:**
 - duckdeploy Bash script
