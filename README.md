@@ -7,7 +7,7 @@ This script automates the process of encoding your ducky script, copying the pay
 - Copy the payload to the drive selected
 - (Optional) Eject the drive
 
-**Notice** This script needs to be placed in the root directory of Hak5's USB-Rubber-Ducky repo where duckencoder.jar resides.
+**Notice** This script needs to be placed in the root directory of [Hak5's USB-Rubber-Ducky](https://github.com/hak5darren/USB-Rubber-Ducky) repo where `duckencoder.jar` resides.
 
 **TO-DO:**
 - duckdeploy Bash script
@@ -20,7 +20,7 @@ duckdeploy
 - `h`: display help
 - `script`: The ducky script, this must be in the same path as this script.
 - `drive`: The letter of the drive the payload would be deployed to
-- `eject`: Wether or not you want the drive to be ejected for you after this script is finished
+- `eject`: Wether or not you want the drive to be ejected for you after this script is finished. Default: No
 
 Example:
 
@@ -28,6 +28,6 @@ Example:
 
 or
 
-`PS>.\duckdeploy.ps1 -script hello_world -drive d -eject n`
+`PS>.\duckdeploy.ps1 -script hello_world -drive d -eject y`
 
 
