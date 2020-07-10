@@ -4,51 +4,67 @@
 # duckdeploy.ps1 [file] [drive_letter] [eject?]
 
 param (
+    [Alias("file")]
+    [Alias("f")]
+    [Alias("s")]
     [string]$script,
+    [Alias("d")]
     [string]$drive,
-    [string]$eject,
+    [Alias("e")]
+    [ValidateSet('y', 'n', 'yes', 'no')][string]$eject,
+    [Alias("h")]
     [switch]$help
 )
 
-Write-Output "Duckdeploy v1.0"
-Write-Output "---------------"
+Write-Host "Duckdeploy v1.0"
+Write-Host "---------------"
 
 if($help) {
-    Write-Output "Usage:  duckdeploy.ps1"
-    Write-Output "   or:   duckdeploy.ps1 -script [file] -drive [drive letter] - eject [yes/no]"
-    Write-Output "`n"
-    Write-Output "Arguments:"
-    Write-Output "-script [file]                The ducky script, this must be in the same path as this script"
-    Write-Output "-drive [drive letter]         The letter of the drive of where the USB is located. Input only the letter"
-    Write-Output "-eject [yes/no]               Wether the drive should be ejected after it has been copied over."
+    Write-Host "Usage:  duckdeploy.ps1"
+    Write-Host "   or:  duckdeploy.ps1 -f [file] -d [drive letter] -e [yes/no]"
+    Write-Host "`n"
+    Write-Host "Arguments:"
+    Write-Host "-f, -file [file]                The ducky script, this must be in the same path as this script"
+    Write-Host "-d, -drive [drive letter]       The letter of the drive of where the USB is located. Input only the letter"
+    Write-Host "-e, -eject [yes/no]             Wether the drive should be ejected after it has been copied over."
     exit
 }
 
-if($script) {
-    $payload_name = $script.trim(".txt")
-} else {
-    $payload_name = Read-Host 'Ducky Script File: '
+$no_move = $false
+
+if(-Not ($script)) {
+    $script = Read-Host 'Ducky Script File: '
+}
+
+$script_name = $script.trim(".txt")
+if(-Not (Test-Path .\payloads\)) {
+    mkdir .\payloads | Out-Null
+    Write-Output "Payloads directory created."    
 }
 
 if(-Not (Test-Path .\$Script)) {
-    Write-Output "ERROR: The file `"${script}`" was not found. Please try again."
+    Write-Host "ERROR: The file `"${script}`" was not found. Please try again." -ForegroundColor Red
     exit
+} elseif (Test-Path ".\payloads\$script_name\$script") {
+    Write-Output "FOUND existing script in payloads folder.`nUsing script from payloads folder.`n"
+    $no_move = $true
+} 
+
+if(-Not($no_move)) {
+    mkdir .\payloads\$script_name | Out-Null
+    Move-Item $script .\payloads\$script_name\
+    Write-Output "Script moved to payloads folder (.\payloads\$script_name)"
 }
 
-if(-Not (Test-Path .\payloads\)) {
-    mkdir .\payloads | Out-Null
-    Write-Output "Payloads directory created."
-}
-mkdir -Force .\payloads\$payload_name | Out-Null
-Write-Output "Encoding your script."
+Write-Host "Encoding script..."
 try{
-    java -jar .\duckencoder.jar -i .\$script -o .\payloads\$payload_name\inject.bin
+    java -jar .\duckencoder.jar -i .\payloads\$script_name\$script -o .\payloads\$script_name\inject.bin
 } catch {
     exit
 }
-Move-Item $script .\payloads\$payload_name\
-Write-Output "Script moved to payloads folder (.\payloads\$payload_name)"
-$script = ".\payloads\" + $payload_name + "/inject.bin"
+
+$payload = ".\payloads\" + $script_name + "\inject.bin"
+Write-Host "Payload: ${payload}`n"
 
 for($i = 0; $i -le 3; $i++) {
     if($drive){
@@ -58,7 +74,7 @@ for($i = 0; $i -le 3; $i++) {
     }
     $drive_letter = $drive_letter.ToUpper() + ":"
     if(-Not (Test-Path $drive_letter)) {
-        Write-Output "ERROR: The drive letter `"${drive_letter}`" was not found."
+        Write-Host "ERROR: The drive letter `"${drive_letter}`" was not found." -ForegroundColor Red
         $drive = $null 
     } else {
         break
@@ -67,8 +83,9 @@ for($i = 0; $i -le 3; $i++) {
         exit
     }
 }
-Copy-Item $Script $drive_letter
-Write-Output "Copied payload to ${drive_letter}\inject.bin"
+
+Copy-Item $payload $drive_letter
+Write-Output "Deployed payload to ${drive_letter}\inject.bin"
 Start-Sleep -m 1000
 if($eject){
     $eject = $eject
@@ -84,5 +101,5 @@ if( $eject -eq "y" -Or $eject -eq "yes" -Or $eject -eq $true){
     Write-Output "Drive `"${drive_letter}`" has been ejected."
 }
 
-Write-Output "DONE"
+Write-Host "DONE"
 exit
