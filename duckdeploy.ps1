@@ -35,7 +35,7 @@ $no_move = $false
 if(-Not ($script)) {
     $script = Read-Host 'Ducky Script File: '
 }
-
+$script = $script.trim(".\")
 $script_name = $script.trim(".txt")
 if(-Not (Test-Path .\payloads\)) {
     mkdir .\payloads | Out-Null
@@ -51,11 +51,11 @@ if(-Not (Test-Path .\$Script)) {
 } 
 
 if(-Not($no_move)) {
-    mkdir .\payloads\$script_name | Out-Null
+    mkdir -f .\payloads\$script_name | Out-Null
     Move-Item $script .\payloads\$script_name\
     Write-Output "Script moved to payloads folder (.\payloads\$script_name)"
 }
-
+Start-Sleep -m 1000
 Write-Host "Encoding script..."
 try{
     java -jar .\duckencoder.jar -i .\payloads\$script_name\$script -o .\payloads\$script_name\inject.bin
