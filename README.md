@@ -13,15 +13,17 @@ This script automates the process of encoding your ducky script, copying the pay
 **TO-DO:**
 - duckdeploy Bash script
 
-# Windows
+# Powershell
 **Usage:** 
 duckdeploy 
 
-**Or:** duckdeploy -script [file] -drive [letter] -eject [y/n]
+**Or:** duckdeploy -file [file] -drive [letter] -eject [y/n]
 - `h`: display help
-- `script`: The ducky script, this must be in the same path as this script.
-- `drive`: The letter of the drive the payload would be deployed to
-- `eject`: Wether or not you want the drive to be ejected for you after this script is finished. Default: No
+- `-f`,`file`: The ducky script, this must be in the same path as this script.
+- `-d`,`drive`: The letter of the drive the payload would be deployed to
+- `-e`,`eject`: Wether or not you want the drive to be ejected for you after this script is finished. Default: No
+
+Tip: If your system does not allow execution of powershell scripts you try the following: `PS>powershell -ep bypass .\duckdeploy.ps1`
 
 Example:
 
@@ -29,6 +31,10 @@ Example:
 
 or
 
-`PS>.\duckdeploy.ps1 -script hello_world.txt -drive d -eject y`
+`PS>.\duckdeploy.ps1 -file hello_world.txt -drive d -eject y`
+
+or 
+
+`PS>.\duckdeploy.ps1 -f hello_world.txt -d d -eject y`
 
 
