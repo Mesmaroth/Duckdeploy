@@ -87,9 +87,7 @@ for($i = 0; $i -le 3; $i++) {
 Copy-Item $payload $drive_letter
 Write-Output "Deployed payload to ${drive_letter}\inject.bin"
 Start-Sleep -m 1000
-if($eject){
-    $eject = $eject
-} else {
+if(-N ($eject)){
     $eject = Read-Host "Would you like to eject the drive? (y/n)"
 }
 $eject = $eject.ToLower()
