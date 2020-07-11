@@ -35,7 +35,7 @@ or
 
 
 
-# Linux
+# Bash
 Usage: duckdeploy
 or: duckdeploy -f [file] -d [drive_letter] -e [y/n]
 - `h`: display help
