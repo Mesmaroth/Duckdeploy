@@ -9,15 +9,11 @@ This script automates the process of encoding your ducky script, copying the pay
 - Copy the payload to the drive selected
 - (Optional) Eject the drive
 
-
-**TO-DO:**
-- duckdeploy Bash script
-
 # Powershell
 **Usage:** 
 duckdeploy 
 
-**Or:** duckdeploy -file [file] -drive [letter] -eject [y/n]
+**Or:** duckdeploy -file [file] -drive [drive_letter] -eject [y/n]
 - `h`: display help
 - `-f`,`file`: The ducky script, this must be in the same path as this script.
 - `-d`,`drive`: The letter of the drive the payload would be deployed to
@@ -38,3 +34,25 @@ or
 `PS>.\duckdeploy.ps1 -f hello_world.txt -d d -eject y`
 
 
+
+# Linux
+Usage: duckdeploy
+or: duckdeploy -f [file] -d [drive_letter] -e [y/n]
+- `h`: display help
+- `-f`: The ducky script, this must be in the same path as this script.
+- `-d`: The letter of the drive the payload would be deployed to
+- `-e`: Wether or not you want the drive to be ejected for you after
+
+**Note:** Unmounting file systems requires higher privileges. You will be promt when it's time to unmount.
+
+Tip: Use something like `df` or `lsblk` to list the file systems.
+
+`$>chmod +x duckdeploy.sh`
+
+Example:
+
+`$>./duckdeploy.sh`
+
+or
+
+`$>./duckdeploy.sh -f hello_world.txt -d sdb1 -e y`
