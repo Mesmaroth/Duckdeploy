@@ -14,7 +14,10 @@ This script automates the process of encoding your ducky script, copying the pay
 duckdeploy 
 
 **Or:** duckdeploy -file [file] -drive [drive_letter] -eject [y/n]
+
+**Or:** duckdeploy -deploy [your payload folder] -drive -[drive_letter] - eject [y/n]
 - `h`: display help
+- `-d`, `deploy`: Deploys the inject.bin to the usb using the folder name of the payload in the payloads folder
 - `-f`,`file`: The ducky script, this must be in the same path as this script.
 - `-d`,`drive`: The letter of the drive the payload would be deployed to
 - `-e`,`eject`: Wether or not you want the drive to be ejected for you after this script is finished. Default: No
@@ -33,6 +36,11 @@ or
 
 `PS>.\duckdeploy.ps1 -f hello_world.txt -d d -eject y`
 
+Deploy a payload from the payloads folder:
+
+Assuming payload path exist: .\payloads\windows-hello_world\inject.bin
+
+`PS>.\duckdeploy.ps1 -x windows-hello_world -d d -e y`
 
 
 # Bash
