@@ -22,7 +22,7 @@ duckdeploy
 - `-d`,`drive`: The letter of the drive the payload would be deployed to
 - `-e`,`eject`: Wether or not you want the drive to be ejected for you after this script is finished. Default: No
 
-Tip: If your system does not allow execution of powershell scripts you try the following: `PS>powershell -ep bypass .\duckdeploy.ps1`
+Tip: If your system does not allow execution of powershell scripts you can try the following: `PS>powershell -ep bypass .\duckdeploy.ps1`
 
 Example:
 
