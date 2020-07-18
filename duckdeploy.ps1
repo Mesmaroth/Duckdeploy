@@ -18,7 +18,7 @@ param (
     [switch]$help
 )
 
-Write-Host "Duckdeploy v1.1"
+Write-Host "Duckdeploy v1.2"
 Write-Host "Written by Mesmaroth"
 Write-Host "--------------------"
 
@@ -27,14 +27,14 @@ if($help) {
     Write-Host "   or:  duckdeploy.ps1 -f [file] -d [drive letter] -e [yes/no]"
     Write-Host "`n"
     Write-Host "Arguments:"
-    Write-Host "-x, -deploy [existing payload name]  Finds and moves the payload to the mounted usb from the payloads folder."
-    Write-Host "-f, -file [file]                     The ducky script, this must be in the same path as this script"
-    Write-Host "-d, -drive [drive letter]            The letter of the drive of where the USB is located. Input only the letter"
+    Write-Host "-x, -deploy [existing payload name]  Finds and deploys the payload to the mounted usb from the payloads folder."
+    Write-Host "-f, -file [file]                     The ducky script, this must be in the same path as this script."
+    Write-Host "-d, -drive [drive letter]            The letter of the drive of where the USB is located. Input only the letter."
     Write-Host "-e, -eject [yes/no]                  Wether the drive should be ejected after it has been copied over."
     exit
 }
 
-function Get-DriveLetter() {
+function Get-Drive() {
     for($i = 0; $i -le 3; $i++) {
         if(-Not ($drive)){
             $drive = Read-Host 'What is the drive letter of the USB? (Letter only)'
@@ -78,7 +78,7 @@ if($deploy) {
         Write-Host "ERROR: inject.bin not found in $deploy folder." -ForegroundColor Red
         exit
     }
-    $drive=Get-DriveLetter
+    $drive=Get-Drive
     cp .\payloads\$deploy\inject.bin ${drive}\inject.bin
     Write-Host "Payload ${deploy} has been deployed to drive `"$($drive.ToUpper())`".`n"
     Start-Sleep 1
@@ -120,7 +120,7 @@ try{
 }
 $payload = ".\payloads\" + $script_name + "\inject.bin"
 Write-Host "Payload: ${payload}`n"
-$drive=Get-DriveLetter
+$drive=Get-Drive
 Copy-Item $payload ${drive}\
 Write-Output "Deployed payload to ${drive}\inject.bin"
 Start-Sleep 1
