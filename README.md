@@ -17,10 +17,10 @@ duckdeploy
 
 **Or:** duckdeploy -deploy [your payload folder] -drive -[drive_letter] - eject [y/n]
 - `h`: display help
-- `-d`, `deploy`: Deploys the inject.bin to the usb using the folder name of the payload in the payloads folder
+- `-x`, `deploy`: Deploys the inject.bin to the usb using the folder name of the payload in the payloads folder.
 - `-f`,`file`: The ducky script, this must be in the same path as this script.
-- `-d`,`drive`: The letter of the drive the payload would be deployed to
-- `-e`,`eject`: Wether or not you want the drive to be ejected for you after this script is finished. Default: No
+- `-d`,`drive`: The letter of the drive the payload would be deployed too.
+- `-e`,`eject`: Whether or not you want the drive to be ejected for you after this script is finished. Default: No
 
 Tip: If your system does not allow execution of powershell scripts you can try the following: `PS>powershell -ep bypass .\duckdeploy.ps1`
 
@@ -38,7 +38,8 @@ or
 
 Deploy a payload from the payloads folder:
 
-Assuming payload path exist: .\payloads\windows-hello_world\inject.bin
+Asumming the payload exit in the payloads folder.
+e.g. `./payloads/hello_world/inject.bin`
 
 `PS>.\duckdeploy.ps1 -x windows-hello_world -d d -e y`
 
@@ -47,9 +48,10 @@ Assuming payload path exist: .\payloads\windows-hello_world\inject.bin
 Usage: duckdeploy
 or: duckdeploy -f [file] -d [drive_letter] -e [y/n]
 - `h`: display help
+- `-x`, `deploy`: Deploys the inject.bin to the usb using the folder name of the payload in the payloads folder.
 - `-f`: The ducky script, this must be in the same path as this script.
-- `-d`: The letter of the drive the payload would be deployed to
-- `-e`: Wether or not you want the drive to be ejected for you after
+- `-d`: The letter of the drive the payload would be deployed too.
+- `-e`: Whether or not you want the drive to be ejected for you after.
 
 **Note:** Unmounting file systems requires higher privileges. You will be promt when it's time to unmount.
 
@@ -64,3 +66,10 @@ Example:
 or
 
 `$>./duckdeploy.sh -f hello_world.txt -d sdb1 -e y`
+
+Deploy a payload from the payloads folder:
+
+Asumming the payload exist in the payloads folder.
+e.g. `./payloads/hello_world/inject.bin`
+
+`$>./duckdeploy.sh -x hello_world -d sdb1 -e y`
